@@ -43,7 +43,7 @@ module.exports = function(passport) {
 		process.nextTick(function(){
 
 			/* check to see if user already exists */
-			User.findOne({ 'googleId':profile.id}, function(err, user) {
+			User.findOne({ 'google.id':profile.id}, function(err, user) {
 				if(err){
 					return done(err);
 				}
