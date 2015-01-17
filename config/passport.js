@@ -43,7 +43,7 @@ module.exports = function(passport) {
 		process.nextTick(function(){
 
 			/* check to see if user already exists */
-			User.findOne({ 'google.id':profile.id}, function(err, user) {
+			User.findOne({ 'googleId':profile.id}, function(err, user) {
 				if(err){
 					return done(err);
 				}
@@ -57,9 +57,9 @@ module.exports = function(passport) {
 
 					/* set all profile information */
 					newUser.google.id = profile.id;
-					newUser.google.token = token;
+					newUser.google.token = accessToken;
 					newUser.google.name = profile.displayName;
-					newUSer.googe.email = profile.emails[0].value;
+					newUser.google.email = profile.emails[0].value;
 
 					/* save the new user */
 					newUser.save(function(err) {
