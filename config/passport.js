@@ -1,6 +1,6 @@
 // config/passport.js
 /* load the things */
-var GoogleStrategy = require('passport-google-oauth').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 /* load user model */
 var User = require('../app/models/user');
@@ -39,7 +39,7 @@ module.exports = function(passport) {
 		callbackURL : configAuth.googleAuth.callbackURL,
 
 	},
-	function(token, refreshToken, profile, done) {
+	function(accessToken, refreshToken, profile, done) {
 		process.nextTick(function(){
 
 			/* check to see if user already exists */
