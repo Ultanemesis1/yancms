@@ -39,7 +39,7 @@ app.set('view engine', 'handlebars');
 app.use(session({ secret: process.env.KEEPITSECRET })); //session secret
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
-
+app.use('/public', express.static('public'));
 /* routes */
 require('./app/routes/routes.js')(app, passport); //load routes and pass app
 
