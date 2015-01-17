@@ -1,6 +1,6 @@
 // config/passport.js
 /* load the things */
-var GoogleStrategy = require('passport-google').Strategy;
+var GoogleStrategy = require('passport-google-oauth').Strategy;
 
 /* load user model */
 var User = require('../app/models/user');
