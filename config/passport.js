@@ -49,7 +49,12 @@ module.exports = function(passport) {
 				}
 				if(user){
 					/* if found, log user in */
+					if (user.authorized === true){
 					return done(null, user);
+					}
+					else {
+						return done(err);
+					}
 				}
 				else {
 					/* if user does not exist, create user */
@@ -60,6 +65,7 @@ module.exports = function(passport) {
 					newUser.google.token = accessToken;
 					newUser.google.name = profile.displayName;
 					newUser.google.email = profile.emails[0].value;
+					newUser.authorized = false;
 
 					/* save the new user */
 					newUser.save(function(err) {
