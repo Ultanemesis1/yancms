@@ -1,5 +1,6 @@
 //app/routes/routes.js
 
+
 module.exports = function(app, passport) {
 	//=======================
 	// Primary Routes
@@ -13,6 +14,13 @@ module.exports = function(app, passport) {
 	/* show dashboard */
 	app.get('/dashboard', isLoggedIn, function(req, res) {
 		res.render('dashboard', {
+			user : req.user
+		});
+	});
+
+	/* page for registered but unauthorized users */
+	app.get('/pending', function(req, res) {
+		res.render('pending', {
 			user : req.user
 		});
 	});
@@ -40,7 +48,7 @@ module.exports = function(app, passport) {
 
 /* check if user is logged in */
 function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) {
+	if (req.isAuthenticated()){
 		return next();
 	}
 	// redirect if not logged in
