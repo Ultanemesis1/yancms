@@ -1,6 +1,6 @@
 // config/passport.js
 /* load the things */
-var GoogleStrategy = require('passport-google').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 /* load user model */
 var User = require('../app/models/user');
@@ -19,7 +19,7 @@ module.exports = function(passport) {
 	serialize and unserialize users out of session */
 
 	/* serialize user for session */
-	passport.seralizeUser(function(user, done) {
+	passport.serializeUser(function(user, done) {
 		done(null, user.id);
 	});
 
@@ -39,7 +39,7 @@ module.exports = function(passport) {
 		callbackURL : configAuth.googleAuth.callbackURL,
 
 	},
-	function(token, refreshToken, profile, done) {
+	function(accessToken, refreshToken, profile, done) {
 		process.nextTick(function(){
 
 			/* check to see if user already exists */
@@ -49,7 +49,12 @@ module.exports = function(passport) {
 				}
 				if(user){
 					/* if found, log user in */
+					if (user.authorized === true){
 					return done(null, user);
+					}
+					else {
+						return done(err);
+					}
 				}
 				else {
 					/* if user does not exist, create user */
@@ -57,9 +62,10 @@ module.exports = function(passport) {
 
 					/* set all profile information */
 					newUser.google.id = profile.id;
-					newUser.google.token = token;
+					newUser.google.token = accessToken;
 					newUser.google.name = profile.displayName;
-					newUSer.googe.email = profile.emails[0].value;
+					newUser.google.email = profile.emails[0].value;
+					newUser.authorized = false;
 
 					/* save the new user */
 					newUser.save(function(err) {

@@ -1,0 +1,24 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+body {
+	color : #4D4E53;
+}
+
+.login-comp {
+	width: 60%;
+	margin: 20% auto 20% auto;
+}
+
+.googleButton {
+	background-color: #F44336;
+	color: #FFF;
+	padding: 5px 10px 5px 10px;
+	border-radius: 20px;
+	text-decoration: none;
+}
